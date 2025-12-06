@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Art of Technical Documentation - Horizon Digital Solutions</title>
+  <meta name="description" content="Good documentation is a competitive advantage. Learn how to create docs that developers actually want to read and use.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="/" class="logo">Horizon Digital</a>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/blog/">Blog</a><span>/</span>The Art of Technical Documentation
+    </div>
+    <h1>The Art of Technical Documentation</h1>
+  </div>
+
+  <main>
+    <article>
+      <p class="meta">October 5, 2024 &middot; 9 min read</p>
+
+      <p>Documentation is how your code speaks to its future maintainers—including future you. Good documentation reduces onboarding time, prevents repeated questions, and builds confidence in your software. Yet documentation remains one of the most neglected aspects of software development.</p>
+
+      <h2>Write for Your Reader</h2>
+      <p>Before writing a word, understand who will read it. A getting-started guide for new users differs fundamentally from API reference documentation for experienced developers. Both are documentation, but they serve different purposes and audiences.</p>
+
+      <p>Consider what your reader knows and what they're trying to accomplish. Meet them where they are. Don't assume knowledge you haven't established. Don't explain concepts they certainly understand.</p>
+
+      <h2>Types of Documentation</h2>
+      <p>The Diátaxis framework provides a useful taxonomy:</p>
+
+      <p><strong>Tutorials</strong> — Learning-oriented guides that take beginners through a complete experience. "Build your first X." The reader follows along, and by the end, they've accomplished something real.</p>
+
+      <p><strong>How-to Guides</strong> — Problem-oriented recipes for specific tasks. "How to configure authentication." The reader has a goal and needs directions to reach it.</p>
+
+      <p><strong>Reference</strong> — Information-oriented technical descriptions. API documentation, configuration options, command-line flags. Comprehensive, accurate, and structured for lookup.</p>
+
+      <p><strong>Explanation</strong> — Understanding-oriented discussion of concepts. Architecture decisions, design rationale, theoretical background. Helps readers build mental models.</p>
+
+      <p>Most projects need all four types, but they shouldn't be mixed. A tutorial polluted with exhaustive reference material overwhelms learners. Reference docs cluttered with step-by-step guides frustrate experienced users seeking quick answers.</p>
+
+      <h2>Show, Don't Just Tell</h2>
+      <p>Code examples are the heart of technical documentation. Every concept, every API, every configuration option should be illustrated with working code.</p>
+
+      <p>Effective code examples:</p>
+      <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+        <li>Actually run without modification</li>
+        <li>Demonstrate realistic use cases</li>
+        <li>Are self-contained (no hidden dependencies)</li>
+        <li>Include expected output where helpful</li>
+        <li>Stay focused on one concept at a time</li>
+      </ul>
+
+      <p>Test your examples. Documentation with broken code examples erodes trust faster than no documentation at all.</p>
+
+      <h2>Keep It Maintainable</h2>
+      <p>Outdated documentation is often worse than no documentation—it actively misleads. Design your documentation practice for sustainability:</p>
+
+      <p><strong>Automate what you can</strong> — Generate API references from code annotations. Extract examples from test suites. Build documentation as part of CI to catch broken links and missing files.</p>
+
+      <p><strong>Locate docs near code</strong> — Documentation in the same repository as code gets updated with code. Remote wikis drift.</p>
+
+      <p><strong>Review docs like code</strong> — Include documentation changes in pull requests. Review them with the same rigor you apply to implementation.</p>
+
+      <h2>Writing Well</h2>
+      <p>Clear writing matters. Use short sentences. Prefer active voice. Eliminate jargon when simpler words suffice. Be consistent with terminology—define terms and use them the same way throughout.</p>
+
+      <p>Writing documentation is writing. The same principles that make prose readable apply: structure, clarity, precision, and respect for the reader's time.</p>
+
+      <p>Great documentation is a gift to everyone who encounters your software. Invest in it accordingly.</p>
+    </article>
+
+    <section style="margin-top: 3rem;">
+      <h2>Related Posts</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3><a href="/blog/post-2/">Design Systems at Scale</a></h3>
+          <p>Building consistent, maintainable design systems.</p>
+        </div>
+        <div class="card">
+          <h3><a href="/blog/post-8/">Effective Remote Collaboration</a></h3>
+          <p>Strategies for distributed development teams.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Horizon Digital Solutions. All rights reserved.</p>
+    <p><a href="/about/">About</a> &middot; <a href="/services/">Services</a> &middot; <a href="/blog/">Blog</a> &middot; <a href="/contact/">Contact</a></p>
+  </footer>
+</body>
+</html>

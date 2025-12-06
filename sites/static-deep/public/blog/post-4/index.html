@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript Best Practices for Large Codebases - Horizon Digital Solutions</title>
+  <meta name="description" content="Hard-won lessons on structuring TypeScript projects, managing types effectively, and avoiding common pitfalls at scale.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="/" class="logo">Horizon Digital</a>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/blog/">Blog</a><span>/</span>TypeScript Best Practices
+    </div>
+    <h1>TypeScript Best Practices for Large Codebases</h1>
+  </div>
+
+  <main>
+    <article>
+      <p class="meta">October 28, 2024 &middot; 11 min read</p>
+
+      <p>TypeScript has become the default choice for serious JavaScript development. Its type system catches bugs at compile time, enables powerful IDE tooling, and serves as living documentation. But TypeScript at scale presents unique challenges that small projects never encounter.</p>
+
+      <h2>Strict Mode is Non-Negotiable</h2>
+      <p>Start every project with strict mode enabled. The stricter the type checking, the more bugs TypeScript catches. Projects that enable strict mode later face painful migration efforts as they discover implicit any types and unchecked nulls throughout the codebase.</p>
+
+      <p>Key strict options to enable:</p>
+      <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+        <li><code>strict: true</code> (enables all strict type-checking options)</li>
+        <li><code>noUncheckedIndexedAccess: true</code> (catches array/object access issues)</li>
+        <li><code>noImplicitReturns: true</code> (ensures all code paths return)</li>
+        <li><code>exactOptionalPropertyTypes: true</code> (distinguishes undefined from missing)</li>
+      </ul>
+
+      <h2>Organize Types Thoughtfully</h2>
+      <p>Type organization matters as codebases grow. Some principles we've found effective:</p>
+
+      <p><strong>Co-locate types with implementation</strong> — Types that describe a module's internal workings should live in that module. Only export types that form part of the public API.</p>
+
+      <p><strong>Create domain type files</strong> — Shared business domain types (User, Order, Product) belong in dedicated type files that multiple modules import.</p>
+
+      <p><strong>Avoid type barrel files</strong> — A single types/index.ts that re-exports everything creates circular dependency risks and makes it harder to understand type provenance.</p>
+
+      <h2>Prefer Interfaces for Object Shapes</h2>
+      <p>When defining object shapes, interfaces offer better error messages, performance, and extensibility than type aliases. Use types for unions, intersections, and complex type manipulation.</p>
+
+      <p>Interfaces merge declarations automatically, which helps when extending third-party types. Types can't be reopened after creation.</p>
+
+      <h2>Discriminated Unions for State</h2>
+      <p>Model state machines and complex conditions using discriminated unions. Instead of optional properties and boolean flags, create explicit states:</p>
+
+      <p>This pattern eliminates impossible states, provides exhaustiveness checking, and makes code self-documenting. When you add a new state, the compiler tells you everywhere you need to handle it.</p>
+
+      <h2>Generic Constraints</h2>
+      <p>When writing generic functions, constrain type parameters to what you actually need. Overly broad generics (<code>&lt;T&gt;</code>) provide less type safety than constrained ones (<code>&lt;T extends HasId&gt;</code>).</p>
+
+      <p>Good constraints document requirements and help TypeScript provide better inference. They're especially important for library code that others will consume.</p>
+
+      <h2>Type Narrowing</h2>
+      <p>Leverage TypeScript's control flow analysis. The compiler tracks type narrowing through conditionals, making runtime checks also compile-time guarantees. Design your code to narrow types early, then work with the narrowed types downstream.</p>
+
+      <p>User-defined type guards (functions returning <code>x is Type</code>) let you encapsulate complex narrowing logic while preserving type information for the caller.</p>
+
+      <h2>Gradual Adoption Patterns</h2>
+      <p>Migrating a large JavaScript codebase to TypeScript is a marathon, not a sprint. Enable <code>allowJs</code> to mix JavaScript and TypeScript. Use JSDoc annotations to add types to JavaScript files before converting them. Focus on high-value files first: shared utilities, API boundaries, and complex business logic.</p>
+
+      <p>TypeScript rewards investment. The larger and longer-lived your codebase, the more value strong typing provides. Take the time to do it right.</p>
+    </article>
+
+    <section style="margin-top: 3rem;">
+      <h2>Related Posts</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3><a href="/blog/post-3/">Web Performance Essentials</a></h3>
+          <p>Core strategies for lightning-fast web applications.</p>
+        </div>
+        <div class="card">
+          <h3><a href="/blog/post-7/">The Art of Technical Documentation</a></h3>
+          <p>Creating docs developers actually want to use.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Horizon Digital Solutions. All rights reserved.</p>
+    <p><a href="/about/">About</a> &middot; <a href="/services/">Services</a> &middot; <a href="/blog/">Blog</a> &middot; <a href="/contact/">Contact</a></p>
+  </footer>
+</body>
+</html>

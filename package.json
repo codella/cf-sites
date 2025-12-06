@@ -1,0 +1,21 @@
+{
+  "name": "cf-sites",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Multi-site Cloudflare Workers project",
+  "workspaces": [
+    "sites/*"
+  ],
+  "scripts": {
+    "dev": "echo 'Run npm run dev from a specific site directory'",
+    "deploy:all": "npm run deploy --workspaces --if-present",
+    "build:all": "npm run build --workspaces --if-present",
+    "lint:all": "npm run lint --workspaces --if-present"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "static-sites"
+  ],
+  "license": "MIT"
+}

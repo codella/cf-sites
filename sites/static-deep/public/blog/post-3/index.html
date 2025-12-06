@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Performance Essentials - Horizon Digital Solutions</title>
+  <meta name="description" content="Core strategies for building lightning-fast web applications, from initial load optimization to runtime performance tuning.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="/" class="logo">Horizon Digital</a>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Web Performance Essentials
+    </div>
+    <h1>Web Performance Essentials</h1>
+  </div>
+
+  <main>
+    <article>
+      <p class="meta">November 5, 2024 &middot; 9 min read</p>
+
+      <p>Performance is a feature. Studies consistently show that faster sites have higher conversion rates, better engagement, and improved search rankings. Yet many teams treat performance as an afterthought, addressing it only when problems become too obvious to ignore.</p>
+
+      <h2>Measure First</h2>
+      <p>You can't improve what you don't measure. Before optimizing anything, establish baselines using tools like Lighthouse, WebPageTest, and real user monitoring (RUM). Focus on Core Web Vitals: Largest Contentful Paint (LCP), First Input Delay (FID), and Cumulative Layout Shift (CLS).</p>
+
+      <p>Set performance budgets early. Define acceptable thresholds for metrics like JavaScript bundle size, time to interactive, and total page weight. Integrate budget checks into your CI pipeline to catch regressions before they ship.</p>
+
+      <h2>Reduce, Compress, Cache</h2>
+      <p>The fastest request is the one that never happens. Start by auditing what you're sending:</p>
+
+      <p><strong>JavaScript</strong> — Bundle analysis often reveals surprising culprits. A date formatting library might add 200KB. An icon library might include thousands of icons when you use five. Tree-shaking, code splitting, and careful dependency management make real differences.</p>
+
+      <p><strong>Images</strong> — Use modern formats (WebP, AVIF), serve responsive images with srcset, and lazy-load below-the-fold content. Image optimization alone often yields the biggest performance wins.</p>
+
+      <p><strong>Fonts</strong> — Subset fonts to include only the characters you need. Use font-display: swap to prevent invisible text during loading. Consider system fonts for non-critical text.</p>
+
+      <h2>Critical Rendering Path</h2>
+      <p>Optimize how the browser builds and renders the page:</p>
+
+      <p>Inline critical CSS to avoid render-blocking stylesheet requests. Defer non-critical JavaScript. Use resource hints (preconnect, prefetch, preload) to inform the browser about upcoming requests.</p>
+
+      <p>Server-side rendering (SSR) or static generation can dramatically improve perceived performance by delivering meaningful HTML immediately, rather than requiring JavaScript execution before the user sees content.</p>
+
+      <h2>Runtime Performance</h2>
+      <p>Initial load is only half the story. Runtime performance—how the application feels during use—matters equally:</p>
+
+      <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+        <li>Debounce expensive event handlers</li>
+        <li>Virtualize long lists instead of rendering thousands of DOM nodes</li>
+        <li>Use CSS transforms for animations (they're GPU-accelerated)</li>
+        <li>Profile with browser DevTools to identify bottlenecks</li>
+        <li>Avoid layout thrashing by batching DOM reads and writes</li>
+      </ul>
+
+      <h2>Performance Culture</h2>
+      <p>Sustainable performance requires organizational commitment. Make performance visible through dashboards. Celebrate wins. Include performance in code review criteria. When everyone owns performance, it stays top of mind throughout development.</p>
+
+      <p>Fast websites aren't accidents—they're the result of intentional decisions at every stage of development. Start measuring, keep optimizing, and never stop.</p>
+    </article>
+
+    <section style="margin-top: 3rem;">
+      <h2>Related Posts</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3><a href="/blog/post-1/">The Future of Edge Computing</a></h3>
+          <p>How edge computing is reshaping application architecture.</p>
+        </div>
+        <div class="card">
+          <h3><a href="/blog/post-4/">TypeScript Best Practices</a></h3>
+          <p>Structuring TypeScript projects for scale.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Horizon Digital Solutions. All rights reserved.</p>
+    <p><a href="/about/">About</a> &middot; <a href="/services/">Services</a> &middot; <a href="/blog/">Blog</a> &middot; <a href="/contact/">Contact</a></p>
+  </footer>
+</body>
+</html>

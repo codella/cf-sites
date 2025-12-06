@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serverless Architecture Patterns - Horizon Digital Solutions</title>
+  <meta name="description" content="A practical guide to serverless computing—understanding the trade-offs, choosing the right patterns, and avoiding common mistakes.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="/" class="logo">Horizon Digital</a>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Serverless Architecture Patterns
+    </div>
+    <h1>Serverless Architecture Patterns</h1>
+  </div>
+
+  <main>
+    <article>
+      <p class="meta">October 12, 2024 &middot; 12 min read</p>
+
+      <p>Serverless computing has matured from experimental technology to production-ready infrastructure. But "serverless" is often misunderstood. It doesn't mean no servers—it means someone else manages them. Your job shifts from capacity planning to function design.</p>
+
+      <h2>When Serverless Makes Sense</h2>
+      <p>Serverless excels in certain scenarios:</p>
+
+      <p><strong>Variable workloads</strong> — Traffic that spikes unpredictably benefits from instant scaling without pre-provisioned capacity. You pay for what you use.</p>
+
+      <p><strong>Event-driven processing</strong> — Responding to file uploads, database changes, or message queue events maps naturally to function-as-a-service models.</p>
+
+      <p><strong>Microservices decomposition</strong> — Small, focused functions with clear boundaries are easier to reason about and deploy independently.</p>
+
+      <p><strong>Rapid experimentation</strong> — Spinning up new endpoints without infrastructure overhead accelerates prototyping and A/B testing.</p>
+
+      <h2>When to Think Twice</h2>
+      <p>Serverless isn't always the answer:</p>
+
+      <p><strong>Consistent high load</strong> — If your functions run constantly, reserved capacity on traditional infrastructure may be more cost-effective.</p>
+
+      <p><strong>Long-running processes</strong> — Function timeout limits (often 15-30 minutes) don't accommodate extended processing tasks.</p>
+
+      <p><strong>Complex local state</strong> — Stateless function architecture doesn't suit applications requiring extensive in-memory caching or session state.</p>
+
+      <h2>Key Patterns</h2>
+
+      <p><strong>API Composition</strong> — Functions handle HTTP requests, implementing RESTful or GraphQL APIs. This is the most common pattern and often the gateway to serverless adoption.</p>
+
+      <p><strong>Event Fan-out</strong> — A single event triggers multiple functions for parallel processing. Uploading an image might trigger thumbnail generation, metadata extraction, and content moderation simultaneously.</p>
+
+      <p><strong>Choreography vs. Orchestration</strong> — Decentralized choreography lets functions emit events that other functions consume. Centralized orchestration uses step functions or workflows to coordinate complex processes. Choose based on complexity and observability needs.</p>
+
+      <p><strong>Edge Functions</strong> — Run logic at CDN edge locations for lowest latency. Great for personalization, A/B testing, and request routing.</p>
+
+      <h2>Cold Starts and Warm Pools</h2>
+      <p>Cold starts—the latency hit when a function instance initializes—remain serverless's most discussed limitation. Strategies to mitigate:</p>
+
+      <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+        <li>Minimize dependencies and bundle size</li>
+        <li>Use provisioned concurrency for latency-sensitive functions</li>
+        <li>Choose runtimes with fast cold starts (Node.js, Python) for user-facing endpoints</li>
+        <li>Consider edge platforms that maintain always-warm instances globally</li>
+      </ul>
+
+      <h2>Observability Challenges</h2>
+      <p>Distributed serverless architectures make debugging harder. Invest heavily in:</p>
+
+      <p><strong>Structured logging</strong> — Every function invocation should log correlation IDs that trace requests across function boundaries.</p>
+
+      <p><strong>Distributed tracing</strong> — Tools like AWS X-Ray or OpenTelemetry visualize request flows through your serverless graph.</p>
+
+      <p><strong>Metrics and alerting</strong> — Monitor function duration, error rates, and cold start frequency. Alert on anomalies.</p>
+
+      <p>Serverless is a tool, not a religion. Use it where it fits, combine it with other architectures where appropriate, and always make decisions based on your specific requirements and constraints.</p>
+    </article>
+
+    <section style="margin-top: 3rem;">
+      <h2>Related Posts</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3><a href="/blog/post-1/">The Future of Edge Computing</a></h3>
+          <p>Building at the network's edge for lower latency.</p>
+        </div>
+        <div class="card">
+          <h3><a href="/blog/post-3/">Web Performance Essentials</a></h3>
+          <p>Core strategies for lightning-fast web applications.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Horizon Digital Solutions. All rights reserved.</p>
+    <p><a href="/about/">About</a> &middot; <a href="/services/">Services</a> &middot; <a href="/blog/">Blog</a> &middot; <a href="/contact/">Contact</a></p>
+  </footer>
+</body>
+</html>

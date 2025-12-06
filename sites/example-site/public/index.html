@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example Site</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Example Site</h1>
+    <p>A template site with client-side JavaScript content expansion</p>
+  </header>
+
+  <main>
+    <section id="static-content">
+      <h2>Static Content</h2>
+      <p>This content is served directly from the static HTML file.</p>
+    </section>
+
+    <section id="dynamic-content">
+      <h2>Dynamic Content</h2>
+      <div id="expanded-content">
+        <p class="loading">Loading dynamic content...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Example Site. Powered by Cloudflare Workers.</p>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

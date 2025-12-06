@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building Accessible Web Applications - Horizon Digital Solutions</title>
+  <meta name="description" content="Accessibility isn't just about meeting WCAG guidelines—it's about creating genuinely inclusive experiences for all users.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="/" class="logo">Horizon Digital</a>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Building Accessible Web Applications
+    </div>
+    <h1>Building Accessible Web Applications</h1>
+  </div>
+
+  <main>
+    <article>
+      <p class="meta">October 20, 2024 &middot; 10 min read</p>
+
+      <p>Web accessibility isn't a checklist to complete—it's a commitment to ensuring everyone can use your application. Over a billion people worldwide live with some form of disability. When we build inaccessible products, we exclude them.</p>
+
+      <h2>Beyond Compliance</h2>
+      <p>WCAG guidelines provide a useful framework, but meeting level AA compliance is the floor, not the ceiling. Real accessibility requires understanding how people with different abilities actually use technology.</p>
+
+      <p>Screen reader users navigate by headings and landmarks. Keyboard users need visible focus indicators and logical tab order. Users with motor impairments need adequately sized click targets. Users with cognitive disabilities need clear language and consistent patterns.</p>
+
+      <h2>Semantic HTML is Your Foundation</h2>
+      <p>Most accessibility problems stem from misusing HTML. Native HTML elements come with built-in accessibility: buttons are focusable and keyboard-activatable, form labels are associated with inputs, headings create navigable document structure.</p>
+
+      <p>When you use a <code>&lt;div&gt;</code> where a <code>&lt;button&gt;</code> belongs, you lose all of this for free functionality. You then have to manually add <code>tabindex</code>, keyboard handlers, and ARIA roles—and you'll probably miss something.</p>
+
+      <p>Use the right element for the job. When no native element fits, reach for ARIA carefully and deliberately.</p>
+
+      <h2>Focus Management</h2>
+      <p>Interactive web applications present unique focus challenges. When a modal opens, focus should move inside it and trap there until closed. When content loads dynamically, screen readers need to know. When navigation occurs in a single-page app, focus must move appropriately.</p>
+
+      <p>Key patterns:</p>
+      <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+        <li>Focus traps for modals and dialogs</li>
+        <li>Skip links to bypass repetitive navigation</li>
+        <li>Focus restoration when temporary UI closes</li>
+        <li>Announcing dynamic content changes via live regions</li>
+      </ul>
+
+      <h2>Color and Contrast</h2>
+      <p>Approximately 8% of men and 0.5% of women have some form of color blindness. Never rely on color alone to convey information. Use patterns, labels, or icons alongside color cues.</p>
+
+      <p>Contrast ratios matter. Text should have at least 4.5:1 contrast against its background (3:1 for large text). UI components and graphical objects need 3:1 contrast. Test your designs with contrast checking tools and color blindness simulators.</p>
+
+      <h2>Testing for Accessibility</h2>
+      <p>Automated tools catch roughly 30-40% of accessibility issues. They're valuable for finding obvious problems—missing alt text, low contrast, unlabeled buttons—but they can't evaluate user experience.</p>
+
+      <p>Supplement automated testing with:</p>
+      <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+        <li>Keyboard-only testing: Navigate without a mouse</li>
+        <li>Screen reader testing: Use VoiceOver, NVDA, or JAWS</li>
+        <li>Zoom testing: Verify usability at 200% zoom</li>
+        <li>User testing: Include disabled users in your research</li>
+      </ul>
+
+      <h2>Accessibility as Process</h2>
+      <p>Sustainable accessibility requires baking it into your development process. Include accessibility criteria in definition of done. Add automated checks to CI pipelines. Train your team on common patterns and pitfalls. Conduct regular audits.</p>
+
+      <p>Building accessible products isn't just the right thing to do—it often results in better products for everyone. Curb cuts help parents with strollers. Captions help people watching in noisy environments. Accessible design is good design.</p>
+    </article>
+
+    <section style="margin-top: 3rem;">
+      <h2>Related Posts</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3><a href="/blog/post-2/">Design Systems at Scale</a></h3>
+          <p>Building consistent, maintainable design systems.</p>
+        </div>
+        <div class="card">
+          <h3><a href="/blog/post-3/">Web Performance Essentials</a></h3>
+          <p>Core strategies for lightning-fast web applications.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Horizon Digital Solutions. All rights reserved.</p>
+    <p><a href="/about/">About</a> &middot; <a href="/services/">Services</a> &middot; <a href="/blog/">Blog</a> &middot; <a href="/contact/">Contact</a></p>
+  </footer>
+</body>
+</html>
