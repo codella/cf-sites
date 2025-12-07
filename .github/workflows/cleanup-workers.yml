@@ -25,7 +25,7 @@ jobs:
         id: repo-workers
         run: |
           EXPECTED_WORKERS=""
-          for site_dir in sites/*/; do
+          for site_dir in */; do
             if [ -f "${site_dir}wrangler.toml" ]; then
               worker_name=$(grep '^name = ' "${site_dir}wrangler.toml" | head -1 | sed 's/name = "\(.*\)"/\1/')
               if [ -n "$worker_name" ]; then
