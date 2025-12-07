@@ -4,7 +4,8 @@
   "private": true,
   "description": "Multi-site Cloudflare Workers project",
   "workspaces": [
-    "sites/*"
+    "dynamic-spa",
+    "large-static"
   ],
   "scripts": {
     "dev": "echo 'Run npm run dev from a specific site directory'",
