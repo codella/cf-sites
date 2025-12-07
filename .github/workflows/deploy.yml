@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        site: [example-site, static-deep]
+        site: [dynamic-spa, large-static]
     steps:
       - uses: actions/checkout@v4
 

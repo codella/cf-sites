@@ -24,8 +24,8 @@ npm run deploy                 # Deploy to Cloudflare
 
 ### Running a specific site from root
 ```bash
-npm run dev --workspace=example-site
-npm run deploy --workspace=static-deep
+npm run dev --workspace=dynamic-spa
+npm run deploy --workspace=large-static
 ```
 
 ## Architecture
@@ -54,10 +54,10 @@ export default {
 
 ## Adding a New Site
 
-1. Copy existing site: `cp -r sites/example-site sites/my-site`
+1. Copy existing site: `cp -r sites/dynamic-spa sites/my-site`
 2. Update `sites/my-site/package.json`: change `"name"` field
 3. Update `sites/my-site/wrangler.toml`: change `name` field
-4. Add site name to `.github/workflows/deploy.yml` matrix: `site: [example-site, static-deep, my-site]`
+4. Add site name to `.github/workflows/deploy.yml` matrix: `site: [dynamic-spa, large-static, my-site]`
 5. Run `npm install` from root
 
 ## CI/CD
