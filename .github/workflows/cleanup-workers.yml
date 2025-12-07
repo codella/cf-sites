@@ -1,0 +1,135 @@
+name: Cleanup Orphaned Workers
+
+on:
+  schedule:
+    # Run every Monday at 00:00 UTC
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Wrangler
+        run: npm install -g wrangler@latest
+
+      - name: Get expected worker names from repo
+        id: repo-workers
+        run: |
+          EXPECTED_WORKERS=""
+          for site_dir in sites/*/; do
+            if [ -f "${site_dir}wrangler.toml" ]; then
+              worker_name=$(grep '^name = ' "${site_dir}wrangler.toml" | head -1 | sed 's/name = "\(.*\)"/\1/')
+              if [ -n "$worker_name" ]; then
+                EXPECTED_WORKERS="${EXPECTED_WORKERS}${worker_name},"
+              fi
+            fi
+          done
+          # Remove trailing comma
+          EXPECTED_WORKERS="${EXPECTED_WORKERS%,}"
+          echo "workers=${EXPECTED_WORKERS}" >> $GITHUB_OUTPUT
+          echo "Expected workers in repo: ${EXPECTED_WORKERS}"
+
+      - name: List deployed workers
+        id: deployed-workers
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          # List all workers and extract names
+          DEPLOYED=$(wrangler deployments list 2>&1 || true)
+
+          # Alternative: use wrangler to list workers (may vary by wrangler version)
+          # For now, we'll use a script approach
+          echo "deployed<<EOF" >> $GITHUB_OUTPUT
+          wrangler deployments list 2>&1 || echo "No deployments found"
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Find and delete orphaned workers
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          EXPECTED_WORKERS: ${{ steps.repo-workers.outputs.workers }}
+        run: |
+          # Create a script to handle the cleanup
+          cat > cleanup.js << 'SCRIPT'
+          const { execSync } = require('child_process');
+
+          const expectedWorkers = process.env.EXPECTED_WORKERS.split(',').filter(Boolean);
+
+          console.log('Expected workers from repo:', expectedWorkers);
+
+          try {
+            // List all workers using Wrangler API
+            // Note: This uses the cf API directly since wrangler deployments list format varies
+            const listCmd = `curl -s -X GET "https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/workers/scripts" \
+              -H "Authorization: Bearer ${process.env.CLOUDFLARE_API_TOKEN}" \
+              -H "Content-Type: application/json"`;
+
+            const response = execSync(listCmd, { encoding: 'utf-8' });
+            const data = JSON.parse(response);
+
+            if (!data.success) {
+              console.error('Failed to list workers:', data.errors);
+              process.exit(1);
+            }
+
+            const deployedWorkers = data.result.map(w => w.id);
+            console.log('Deployed workers:', deployedWorkers);
+
+            // Find orphaned workers
+            const orphaned = deployedWorkers.filter(w => !expectedWorkers.includes(w));
+
+            if (orphaned.length === 0) {
+              console.log('✅ No orphaned workers found. All deployed workers are in the repository.');
+              process.exit(0);
+            }
+
+            console.log(`\n⚠️  Found ${orphaned.length} orphaned worker(s):`);
+            orphaned.forEach(w => console.log(`  - ${w}`));
+
+            // Delete orphaned workers
+            console.log('\n🗑️  Deleting orphaned workers...');
+            for (const worker of orphaned) {
+              try {
+                console.log(`Deleting ${worker}...`);
+                const deleteCmd = `curl -s -X DELETE "https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/workers/scripts/${worker}" \
+                  -H "Authorization: Bearer ${process.env.CLOUDFLARE_API_TOKEN}" \
+                  -H "Content-Type: application/json"`;
+
+                const deleteResponse = JSON.parse(execSync(deleteCmd, { encoding: 'utf-8' }));
+
+                if (deleteResponse.success) {
+                  console.log(`  ✅ Deleted ${worker}`);
+                } else {
+                  console.error(`  ❌ Failed to delete ${worker}:`, deleteResponse.errors);
+                }
+              } catch (error) {
+                console.error(`  ❌ Error deleting ${worker}:`, error.message);
+              }
+            }
+
+            console.log('\n✅ Cleanup complete!');
+
+          } catch (error) {
+            console.error('Error during cleanup:', error.message);
+            process.exit(1);
+          }
+          SCRIPT
+
+          node cleanup.js
+
+      - name: Cleanup summary
+        if: always()
+        run: |
+          echo "## Cleanup Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Expected workers (from repo):** ${{ steps.repo-workers.outputs.workers }}" >> $GITHUB_STEP_SUMMARY
