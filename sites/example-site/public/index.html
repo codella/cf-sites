@@ -3,33 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Example Site</title>
+  <title>Tech Blog</title>
+  <meta name="description" content="In-depth articles on JavaScript, TypeScript, DevOps, and web development">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Example Site</h1>
-    <p>A template site with client-side JavaScript content expansion</p>
-  </header>
+  <nav id="main-nav">
+    <div class="container">
+      <a href="/" class="logo" data-link>Tech Blog</a>
+      <ul>
+        <li><a href="/" data-link>Home</a></li>
+        <li><a href="/blog" data-link>Blog</a></li>
+        <li><a href="/about" data-link>About</a></li>
+        <li><a href="/contact" data-link>Contact</a></li>
+      </ul>
+    </div>
+  </nav>
 
-  <main>
-    <section id="static-content">
-      <h2>Static Content</h2>
-      <p>This content is served directly from the static HTML file.</p>
-    </section>
+  <div id="app">
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading...</p>
+    </div>
+  </div>
 
-    <section id="dynamic-content">
-      <h2>Dynamic Content</h2>
-      <div id="expanded-content">
-        <p class="loading">Loading dynamic content...</p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2024 Example Site. Powered by Cloudflare Workers.</p>
+  <footer id="main-footer">
+    <div class="container">
+      <p>&copy; 2024 Tech Blog. Powered by Cloudflare Workers.</p>
+    </div>
   </footer>
 
-  <script src="/js/main.js"></script>
+  <script type="module" src="/js/main.js"></script>
 </body>
 </html>

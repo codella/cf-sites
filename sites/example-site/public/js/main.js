@@ -1,46 +1,97 @@
-/**
- * Example client-side JavaScript that expands page content dynamically.
- * This demonstrates how static HTML can be enhanced with JavaScript
- * that runs in the browser.
- */
+import { matchRoute, initRouter } from './router.js';
+import { getCategories, getPostsIndex, getPostBySlug, getPostsByCategory } from './api.js';
+import * as templates from './templates.js';
+import { updateMeta } from './utils.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('expanded-content');
+const app = document.getElementById('app');
 
-  // Simulate fetching or generating dynamic content
-  const dynamicData = [
-    {
-      title: 'Feature One',
-      description: 'This content was added dynamically by JavaScript running in your browser.'
-    },
-    {
-      title: 'Feature Two',
-      description: 'Client-side JavaScript can fetch data, render templates, and create interactive experiences.'
-    },
-    {
-      title: 'Feature Three',
-      description: 'The static HTML provides the foundation, while JavaScript expands and enhances it.'
+async function render(path) {
+  const { handler, params } = matchRoute(path);
+
+  // Show loading state
+  app.innerHTML = templates.renderLoading();
+
+  try {
+    switch (handler) {
+      case 'home': {
+        const [{ posts }, { categories }] = await Promise.all([
+          getPostsIndex(),
+          getCategories()
+        ]);
+        updateMeta(null, 'In-depth articles on JavaScript, TypeScript, DevOps, and web development');
+        app.innerHTML = templates.renderHome(posts, categories);
+        break;
+      }
+
+      case 'blogList': {
+        const { posts } = await getPostsIndex();
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = parseInt(urlParams.get('page')) || 1;
+        updateMeta('All Articles', `Browse all ${posts.length} tech articles`);
+        app.innerHTML = templates.renderBlogList(posts, page);
+        break;
+      }
+
+      case 'categoryList': {
+        const [{ categories }, posts] = await Promise.all([
+          getCategories(),
+          getPostsByCategory(params.category)
+        ]);
+        const category = categories.find(c => c.slug === params.category);
+        if (!category) {
+          updateMeta('Not Found');
+          app.innerHTML = templates.renderNotFound();
+          return;
+        }
+        updateMeta(category.name, category.description);
+        app.innerHTML = templates.renderCategoryList(category, posts);
+        break;
+      }
+
+      case 'post': {
+        const post = await getPostBySlug(params.slug);
+        if (!post) {
+          updateMeta('Not Found');
+          app.innerHTML = templates.renderNotFound();
+          return;
+        }
+
+        // Get related posts
+        const { posts } = await getPostsIndex();
+        const relatedPosts = posts
+          .filter(p => post.relatedPosts?.includes(p.slug))
+          .slice(0, 3);
+
+        updateMeta(post.title, post.excerpt);
+        app.innerHTML = templates.renderPost(post, relatedPosts);
+        break;
+      }
+
+      case 'about': {
+        updateMeta('About', 'Learn about Tech Blog and our mission');
+        app.innerHTML = templates.renderAbout();
+        break;
+      }
+
+      case 'contact': {
+        updateMeta('Contact', 'Get in touch with Tech Blog');
+        app.innerHTML = templates.renderContact();
+        break;
+      }
+
+      case 'notFound':
+      default: {
+        updateMeta('Not Found');
+        app.innerHTML = templates.renderNotFound();
+      }
     }
-  ];
+  } catch (error) {
+    console.error('Render error:', error);
+    app.innerHTML = templates.renderError(error.message);
+  }
+}
 
-  // Clear loading state and render dynamic content
-  container.innerHTML = '';
-
-  dynamicData.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <h3>${item.title}</h3>
-      <p>${item.description}</p>
-    `;
-    container.appendChild(card);
-  });
-
-  // Add timestamp to show when content was generated
-  const timestamp = document.createElement('p');
-  timestamp.style.marginTop = '1rem';
-  timestamp.style.fontSize = '0.875rem';
-  timestamp.style.color = '#64748b';
-  timestamp.textContent = `Content generated at: ${new Date().toLocaleString()}`;
-  container.appendChild(timestamp);
+// Initialize the app
+document.addEventListener('DOMContentLoaded', () => {
+  initRouter(render);
 });

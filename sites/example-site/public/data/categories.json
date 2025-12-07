@@ -1,0 +1,34 @@
+{
+  "categories": [
+    {
+      "slug": "javascript",
+      "name": "JavaScript",
+      "description": "Core JavaScript concepts, ES features, frameworks, and best practices",
+      "color": "#f7df1e"
+    },
+    {
+      "slug": "typescript",
+      "name": "TypeScript",
+      "description": "Type-safe JavaScript development with advanced type system patterns",
+      "color": "#3178c6"
+    },
+    {
+      "slug": "devops",
+      "name": "DevOps",
+      "description": "CI/CD pipelines, containers, infrastructure as code, and monitoring",
+      "color": "#326ce5"
+    },
+    {
+      "slug": "web-development",
+      "name": "Web Development",
+      "description": "Frontend frameworks, performance optimization, and web standards",
+      "color": "#e34f26"
+    },
+    {
+      "slug": "tutorials",
+      "name": "Tutorials",
+      "description": "Step-by-step guides and hands-on coding walkthroughs",
+      "color": "#10b981"
+    }
+  ]
+}

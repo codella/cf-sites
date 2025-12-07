@@ -1,0 +1,20 @@
+{
+  "slug": "type-guards-narrowing",
+  "title": "Type Guards and Type Narrowing",
+  "category": "typescript",
+  "date": "2024-11-26",
+  "readTime": 9,
+  "excerpt": "Refine types at runtime with type guards and control flow analysis.",
+  "tags": [
+    "typescript",
+    "types",
+    "type",
+    "guards"
+  ],
+  "content": "<h2>Introduction</h2>\n<p>Refine types at runtime with type guards and control flow analysis.</p>\n<p>TypeScript's type system provides powerful tools for building robust applications. Understanding type guards and type narrowing will help you leverage these capabilities effectively.</p>\n\n<h2>Understanding the Basics</h2>\n<p>TypeScript extends JavaScript with static types, enabling better tooling and catching errors before runtime. Type Guards and Type Narrowing is a key concept that demonstrates this power.</p>\n<p>The TypeScript compiler performs sophisticated type analysis, helping you write safer code while maintaining the flexibility JavaScript is known for.</p>\n\n<h2>Type Examples</h2>\n<p>Here's how to work with these type concepts:</p>\n<pre><code>// TypeScript type guards and type narrowing example\ninterface Example {\n  id: string;\n  value: number;\n  metadata?: Record&lt;string, unknown&gt;;\n}\n\nfunction process&lt;T extends Example&gt;(item: T): T {\n  console.log(`Processing ${item.id}`);\n  return { ...item, value: item.value * 2 };\n}\n\n// Usage with type safety\nconst result = process({ id: 'demo', value: 42 });</code></pre>\n<p>Notice how TypeScript infers types and provides compile-time guarantees about your code's correctness.</p>\n\n<h2>Advanced Patterns</h2>\n<p>Once you understand the basics, you can use more advanced type patterns:</p>\n<ul>\n<li>Conditional types for flexible type transformations</li>\n<li>Mapped types for creating derivative types</li>\n<li>Template literal types for string manipulation</li>\n<li>Recursive types for complex data structures</li>\n</ul>\n\n<h2>Integration with JavaScript</h2>\n<p>TypeScript works seamlessly with existing JavaScript code. You can gradually adopt it in your projects by:</p>\n<ul>\n<li>Starting with <code>allowJs</code> to include JavaScript files</li>\n<li>Adding type annotations incrementally</li>\n<li>Using declaration files for third-party libraries</li>\n</ul>\n\n<h2>Conclusion</h2>\n<p>Mastering type guards and type narrowing will make you a more effective TypeScript developer. The type system is there to help you, not hinder you—embrace it fully for maximum benefit.</p>",
+  "relatedPosts": [
+    "typescript-generics-guide",
+    "utility-types-explained",
+    "conditional-types"
+  ]
+}
