@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Multi-site monorepo for Cloudflare Workers. Each site lives in `sites/<name>/` and is fully independent with its own `package.json` and `wrangler.toml`. The root uses npm workspaces for orchestration.
+Multi-site monorepo for Cloudflare Workers. Each site lives in its own directory at the root (`<name>/`) and is fully independent with its own `package.json` and `wrangler.toml`. The root uses npm workspaces for orchestration.
 
 ## Commands
 
@@ -16,7 +16,7 @@ npm run build:all              # Build all sites
 npm run lint:all               # Lint all sites
 ```
 
-### Site-level (from sites/<name>/)
+### Site-level (from <name>/)
 ```bash
 npm run dev                    # Local development server (wrangler dev)
 npm run deploy                 # Deploy to Cloudflare
@@ -33,7 +33,7 @@ npm run deploy --workspace=large-static
 All sites use the same pattern: Cloudflare Workers with static assets binding.
 
 ```
-sites/<name>/
+<name>/
 ├── wrangler.toml      # name, main entry, [assets] config
 ├── src/index.ts       # Worker entry: exports fetch handler using env.ASSETS
 └── public/            # Static files served via ASSETS binding
@@ -54,11 +54,12 @@ export default {
 
 ## Adding a New Site
 
-1. Copy existing site: `cp -r sites/dynamic-spa sites/my-site`
-2. Update `sites/my-site/package.json`: change `"name"` field
-3. Update `sites/my-site/wrangler.toml`: change `name` field
+1. Copy existing site: `cp -r dynamic-spa my-site`
+2. Update `my-site/package.json`: change `"name"` field
+3. Update `my-site/wrangler.toml`: change `name` field
 4. Add site name to `.github/workflows/deploy.yml` matrix: `site: [dynamic-spa, large-static, my-site]`
-5. Run `npm install` from root
+5. Add site to root `package.json` workspaces array
+6. Run `npm install` from root
 
 ## CI/CD
 
@@ -79,7 +80,7 @@ The `cleanup-workers.yml` workflow automatically removes orphaned Cloudflare Wor
 - Manually via GitHub Actions UI (workflow_dispatch)
 
 **How it works:**
-1. Scans `sites/*/wrangler.toml` files to find expected worker names
+1. Scans `*/wrangler.toml` files to find expected worker names
 2. Lists all deployed workers in your Cloudflare account
 3. Identifies orphaned workers (deployed but not in repo)
 4. Automatically deletes orphaned workers

@@ -9,7 +9,7 @@ Automatically deploys all sites to Cloudflare Workers when code is pushed to `ma
 **What it does:**
 - Deploys each site in parallel
 - Uses matrix strategy for concurrent deployments
-- Sites: `example-site`, `static-deep`
+- Sites: `dynamic-spa`, `large-static`
 
 **Secrets required:**
 - `CLOUDFLARE_API_TOKEN` - Cloudflare API token with Workers:Edit permissions
@@ -26,7 +26,7 @@ Automatically removes Cloudflare Workers that no longer exist in the repository.
 - **Manual:** Via GitHub Actions UI (Actions → Cleanup Orphaned Workers → Run workflow)
 
 **What it does:**
-1. Scans all `sites/*/wrangler.toml` files to build list of expected workers
+1. Scans all `*/wrangler.toml` files to build list of expected workers
 2. Queries Cloudflare API to list all deployed workers in your account
 3. Identifies orphaned workers (deployed but not in repo)
 4. Automatically deletes orphaned workers
@@ -49,17 +49,17 @@ Automatically removes Cloudflare Workers that no longer exist in the repository.
 
 ### Scenario 1: Site Renamed
 ```
-1. Rename sites/old-name to sites/new-name
+1. Rename old-name to new-name
 2. Update wrangler.toml: name = "new-name"
-3. Update deploy.yml matrix
+3. Update deploy.yml matrix and root package.json workspaces
 4. Push to main (deploys new-name worker)
 5. Cleanup workflow runs (deletes old-name worker)
 ```
 
 ### Scenario 2: Site Deleted
 ```
-1. Delete sites/deleted-site directory
-2. Remove from deploy.yml matrix
+1. Delete deleted-site directory
+2. Remove from deploy.yml matrix and root package.json workspaces
 3. Push to main
 4. Cleanup workflow runs (deletes deleted-site worker)
 ```
